@@ -1,0 +1,137 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>插入排序算法</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            margin: 20px;  
+        }  
+        .sort-container {  
+            max-width: 400px;  
+            margin: 0 auto;  
+            text-align: center;  
+        }  
+        .sort-container p {  
+            margin-bottom: 10px;  
+        }  
+        .input-group {  
+            margin-bottom: 20px;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+        }  
+        .input-group input {  
+            width: 80%;  
+            padding: 8px;  
+            border: 1px solid #ccc;  
+            border-radius: 4px;  
+        }  
+        .input-group button {  
+            padding: 8px 12px;  
+            margin-left: 10px;  
+            border: none;  
+            background-color: #28a745;  
+            color: white;  
+            border-radius: 4px;  
+            cursor: pointer;  
+        }  
+        .input-group button:hover {  
+            background-color: #218838;  
+        }  
+        #sort_result {  
+            display: block;  
+            margin-top: 20px;  
+            font-weight: bold;  
+        }  
+
+        .input-group {  
+            position: relative; /* 为清除按钮定位 */  
+            margin-bottom: 20px;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+        }  
+  
+        .input-group input {  
+            /* ... (保留之前的样式) ... */  
+            padding-right: 24px; /* 为清除按钮留出空间 */  
+        }  
+  
+        .clear-btn {  
+            position: absolute;  
+            right: 60px; /* 调整到输入框内部右侧 */  
+            top: 50%;  
+            transform: translateY(-50%);  
+            background: none;  
+            border: none;  
+            font-size: 16px;  
+            color: #ccc;  
+            cursor: pointer;  
+            display: none; /* 初始隐藏 */  
+        }  
+  
+        .input-group input:not(:placeholder-shown) + .clear-btn {  
+            display: inline-block; /* 当输入框有内容时显示清除按钮 */  
+        }  
+  
+        .clear-btn:hover {  
+            color: #999;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div class="sort-container">  
+        <p>请将要排序的内容写在输入框内</p>
+        <p>格式为：2,1,5,6,3,4，英文逗号分隔</p>  
+        <div class="input-group">  
+            <input type="text" id="sorts" placeholder="输入数字，用逗号分隔">  
+            <button class="clear-btn" onclick="clearInput()">&times;</button>  
+            <button onclick="insert_sort_fun()">提交</button>  
+        </div>  
+        <div>  
+            以下为排序后的内容：  
+            <span id="sort_result"></span>  
+        </div>  
+    </div>  
+    <script>  
+        function insert_sort_fun() {  
+            let input = document.getElementById("sorts").value;  
+            input = input.replace(/，/g, ',');  
+            let arr = input.split(',').map(Number); // 将输入的字符串分割并转换为数字数组  
+            let len = arr.length;  
+  
+            for (var i = 1; i < len; i++) {  
+                let key = arr[i];  
+                let j = i - 1;  
+  
+                while (j >= 0 && arr[j] > key) {  
+                    arr[j + 1] = arr[j];  
+                    j = j - 1;  
+                }  
+                arr[j + 1] = key;  
+            }  
+  
+            document.getElementById("sort_result").innerText = arr.join(', '); // 将数组转换为字符串并显示  
+        }  
+
+        function clearInput() {  
+            document.getElementById("sorts").value = "";  
+            document.getElementById("sort_result").innerText = ""; // 清空结果显示  
+        }  
+  
+        // 可选：为输入框添加事件监听器，以便在输入内容变化时动态显示/隐藏清除按钮  
+        document.getElementById("sorts").addEventListener('input', function() {  
+            const clearBtn = document.querySelector('.clear-btn');  
+            if (this.value) {  
+                clearBtn.style.display = 'inline-block';  
+            } else {  
+                clearBtn.style.display = 'none';  
+            }  
+        });  
+    </script>  
+</body>  
+</html>
